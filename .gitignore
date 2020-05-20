@@ -8,4 +8,4 @@ renv
 .Rproj.user
 .Rhistory
 R_files.Rproj
-.Rproj
+*.Rproj
