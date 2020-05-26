@@ -19,4 +19,15 @@ test <- read.csv("./test_data/week1_homework_scRNAseq_test.csv")
 
 # task 6: subset a vector of the cell_IDs which are from stage hh4 (orig.ident column)
 
+my_vector <- c('Mon','Tues','Wed','Thur','Fri')
 
+Matrix_1 <- matrix(data = 1:100, ncol = 10)
+
+ncol(test)
+
+row.names(test)
+colnames(test)
+test[colnames(test) %in% c('sex')] =="female"
+sum(test[colnames(test) %in% c('sex')]=='female')
+test[test[colnames(test) %in% c('sex')]=='male']
+test[test[colnames(test) %in% c('orig.ident')]=='hh4']
