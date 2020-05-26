@@ -6,14 +6,14 @@
 
 # task 1: make a character vector named my_vector containing 5 elements
 
-my_vector <- c(1,2,3,4,5)
-my_vector <- c("hello", "goodmorning", "Streitlab", "bankholiday", "byebye")
-my_vector <- c(1, "hello", 3, 5, "streitlab")
+my_vector1 <- c(1,2,3,4,5)
+my_vector2 <- c("hello", "goodmorning", "Streitlab", "bankholiday", "byebye")
+my_vector3 <- c(1, "hello", 3, 5, "streitlab")
 
-
+class(my_vector3)
 
 # task 2: make a matrix containing numbers 1:100 split across 10 columns
-matrix (data=1:100, ncol=10) 
+matrix(data=1:100, ncol=10) 
 
 
 
@@ -24,7 +24,9 @@ test <- read.csv("./test_data/week1_homework_scRNAseq_test.csv")
 
 # task 3: how many columns does the dataframe have?
 
-test.dataframe [rownum,colnum]=size(A)
+test.dataframe[rownum,colnum]=size(A)
+
+??size
 9
 
 
