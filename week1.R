@@ -119,14 +119,13 @@ order(test.array)
 test.array[order(test.array)]
 
 
-
 test.array <- factor(c("Alex", "Vida", "Scarlet"))
 
 test.array[order(test.array, decreasing = T)]
 
 levels(test.array) <- c("Scarlet", "Alex", "Vida")
 
-
+faco
 
 
 
