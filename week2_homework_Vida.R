@@ -1,6 +1,6 @@
 
 # here are two samples from a fake RNAseq dataset
-testdata <- readRDS("test_data/fakeRNAseq_week2.RDS")[1:2]
+testdata <- readRDS("//kclad.ds.kcl.ac.uk/anywhere/UserData/RGStore04/k1772383/Desktop/Bioinformatics/Repository/R_training/test_data/fake_bulkdata.RDS")[1:2]
 sumary(testdata)
 
 # for this example I have replaced gene names with ensembl IDs to keep them unique
@@ -9,7 +9,7 @@ sumary(testdata)
 
 # task 1: check whether ALL of the ensembl IDs in the first dataframe are present in the second
 
-testdata <- readRDS("test_data/fakeRNAseq_week2.RDS")[1:2]
+testdata <- 
 read.table("test_data/fakeRNAseq_week2.RDS")[1:2]
 testdata$SOX8_1[,"geneID"] %in% testdata$SOX8_2[,"geneID"]
 
