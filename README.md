@@ -2,7 +2,7 @@
 title: "Week2"
 author: "Alex Thiery"
 date: "03/06/2020"
-output: html_document
+output: rmarkdown::github_document
 ---
 ***
 #### In this session we will look at list data structures, and ordering and combining dataframes stored within lists
