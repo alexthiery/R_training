@@ -35,7 +35,7 @@ test.dataframe[rownum,colnum]=size(A)
 
 "female" %in% test.dataframe [,9]
 test.dataframe[,9] %in% "female"
-test.datafarme sum([,9] %in% "female")
+# test.datafarme sum([,9] %in% "female")
 
 
 
