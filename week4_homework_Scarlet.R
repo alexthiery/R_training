@@ -25,4 +25,13 @@ testdata <- readRDS("./test_data/fakeRNAseq_week2.RDS")
 #         counts.col = name of the counts column which are to be renamed by the sample.names
 
 # Good luck!
+for (i in names(testdata)) {
+  colnames(testdata[[i]])[colnames(testdata[[i]]) == "counts"] <- paste0('counts',i)
+  print(colnames(testdata[[i]]))
+}
+Merged.data<- testdata[[1]]
+for (i in names(testdata)[2:7]) {
+  Merged.data=merge(x=Merged.data, y=testdata[[i]], by='geneID')  
+  
+}
 

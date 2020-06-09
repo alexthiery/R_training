@@ -26,3 +26,12 @@ testdata <- readRDS("./test_data/fakeRNAseq_week2.RDS")
 
 # Good luck!
 
+for (i in names(testdata)) {
+  colnames(testdata[[i]])[colnames(testdata[[i]]) == "counts"] <- paste0('counts',i)
+  print(colnames(testdata[[i]]))
+}
+Merged.data<- testdata[[1]]
+for (i in names(testdata)[2:7]) {
+  Merged.data=merge(x=Merged.data, y=testdata[[i]], by='geneID')  
+  
+}

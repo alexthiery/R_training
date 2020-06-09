@@ -9,9 +9,24 @@ testdata <- readRDS("./test_data/fakeRNAseq_week2.RDS")
 
 # This function should include at least the following arguments -> function(dataframes, sample.names, by.col, counts.col), where:
 #         dataframes = list of dataframes to be merged
-#         sample.names = vector of sample names in order to rename the counts column. This is so the samples can be identified in the final dataframe
 #         by.col = name of column you want to merge the dataframes by
 #         counts.col = name of the counts column which are to be renamed by the sample.names
 
 # Good luck!
+
+
+
+for (i in names(testdata)) {
+  colnames(testdata[[i]])[colnames(testdata[[i]]) == "counts"] <- paste0('counts',i)
+  print(colnames(testdata[[i]]))
+}
+Merged.data<- testdata[[1]]
+for (i in names(testdata)[2:7]) {
+  Merged.data=merge(x=Merged.data, y=testdata[[i]], by='geneID')  
+  
+}
+
+
+
+
 
