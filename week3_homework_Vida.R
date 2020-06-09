@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # change user in order to change default path
 user = 
 
