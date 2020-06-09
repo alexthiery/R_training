@@ -1,5 +1,5 @@
 # here are two samples from a fake RNAseq dataset
-testdata <- readRDS("./fakeRNAseq_week2.RDS")
+testdata <- readRDS("./test_data/fakeRNAseq_week2.RDS")
 
 # The task this week is to combine the 7 dataframes from testdata into a single dataframe
 
