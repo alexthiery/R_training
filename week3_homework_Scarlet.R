@@ -1,5 +1,5 @@
 # change user in order to change default path
-user = "Scarlet"
+user = "Alex"
 
 if(user == "Alex"){
   path = "./test_data/"
@@ -45,12 +45,7 @@ Shared.genes<- testdata$SOX8_1$geneID [testdata$SOX8_1$geneID %in% testdata$SOX8
                                          testdata$SOX8_1$geneID %in% testdata$control_2$geneID &
                                          testdata$SOX8_1$geneID %in% testdata$control_3$geneID &
                                          testdata$SOX8_1$geneID %in% testdata$control_4$geneID]
-Shared.genes.1<- testdata$SOX8_1$geneID [testdata$SOX8_1$geneID %in% testdata$SOX8_2$geneID &
-                                        testdata$SOX8_2$geneID %in% testdata$SOX8_3$geneID &
-                                        testdata$SOX8_3$geneID %in% testdata$control_1$geneID &
-                                       testdata$control_1$geneID %in% testdata$control_2$geneID &
-                                        testdata$control_2$geneID %in% testdata$control_3$geneID &
-                                         testdata$control_3$geneID %in% testdata$control_4$geneID]
+
 newdata <- list()
 for (i in names(testdata)) {
   colnames(testdata[[i]])[2] <- paste0('counts',i)
@@ -59,4 +54,8 @@ for (i in names(testdata)) {
 }  
  
 newdata <- cbind(newdata[[1]], newdata[[2]], newdata[[3]], newdata[[4]],newdata[[5]], newdata[[6]], newdata[[7]])
-newdata <- newdata[,!duplicated(colnames(newdata))]
+
+newdata[,!duplicated(colnames(newdata))]
+newdata[,-which(duplicated(colnames(newdata)))]
+
+
