@@ -11,7 +11,9 @@ if(user == "Alex"){
 
 
 # here are two samples from a fake RNAseq dataset
-testdata <- readRDS("./test_data/fakeRNAseq_week2.RDS")
+#testdata <- readRDS("./test_data/fakeRNAseq_week2.RDS")
+testdata <- readRDS(paste0(path,"fakeRNAseq_week2.RDS"))
+
 
 # Following on from last weeks homework, we now have a merged dataframe with the gene counts for 7 samples.
 
@@ -35,3 +37,15 @@ for (i in names(testdata)[2:7]) {
   
 }
 
+
+newfunction <- function(dataframes, sample.names, by.col, counts.col, ...){
+ sample.names<- names(dataframes)
+   for (i in sample.names) { 
+     colnames(dataframes[[i]])[colnames(dataframes[[i]])=='counts.col'] <- paste0('counts',i)
+  }
+ newmerged.data <- dataframes[[1]]
+ for (i in sample.names[2:length(dataframes)]) {newmerged.data=merge(x=newmerged.data, y=dataframes[[i]], by='by.col')
+    
+ }
+ return(newmerged.data)
+}
