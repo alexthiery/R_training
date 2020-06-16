@@ -1,5 +1,5 @@
 # change user in order to change default path
-user = "Vida"
+user = "Alex"
 
 if(user == "Alex"){
   path = "./test_data/"
@@ -43,13 +43,34 @@ for (i in names(testdata)[2:7]) {
 
 
 #renaming: 
+names()
 
 
-name.change <- function(names(dataframes)){
+function(x,y,x,s,d,g)
+
+name.change <- function(dataframes){
   for (i in names(dataframes)){
   }
   return(colnames(dataframes[[i]])[counts.col] <- paste0("counts.",i))
 }
+
+
+
+
+for (i in names(testdata)){
+  
+  return(colnames(testdata[[i]])[counts.col] <- paste0("counts.",i))
+}
+  
+
+rename <- function(testdata, counts_col_name){
+  for(i in names(testdata)){
+    colnames(testdata[[i]])[colnames(testdata[[i]]) == counts_col_name] <- paste0("counts.", i)
+  }
+  return(testdata)
+}
+
+rename(testdata = testdata, counts_col_name = "counts")
 
 
 
@@ -61,12 +82,40 @@ name.change <- function(names(dataframes)){
 merge.data <- function(merge(dataframes)){
   
   for (i in datafarames[y:z]){
-      y=i+1 z=length(i)
+      y=i+1 z=length(testdata)
   }
   return(merge(x=merge.data, dataframes[[i]], by.col='geneID'))
   
   print(merge.data)
 }
+
+
+
+
+
+merge.func <- function(dataframe, gene_col){
+  first.dataframe = dataframe[[1]]
+  for (i in dataframe[2:length(dataframe)]){
+    first.dataframe <- merge(x=first.dataframe, y=i, by=gene_col)
+  }
+  return(first.dataframe)
+}
+merge.func(dataframe = testdata, gene_col = "geneID")
+
+
+
+test <- function(x, y){
+  Merged.data<- x[[1]]
+  for (i in names(x)[2:7]) {
+    Merged.data=merge(x=Merged.data, y=x[[i]], by=y)  
+  }
+  return(Merged.data)
+}
+
+
+
+test(x = testdata, y = "geneID")
+
 
 
 
