@@ -43,9 +43,11 @@ newfunction <- function(dataframes, sample.names, by.col, counts.col, ...){
    for (i in sample.names) { 
      colnames(dataframes[[i]])[colnames(dataframes[[i]])=='counts.col'] <- paste0('counts',i)
   }
+ 
  newmerged.data <- dataframes[[1]]
- for (i in sample.names[2:length(dataframes)]) {newmerged.data=merge(x=newmerged.data, y=dataframes[[i]], by='by.col')
+ for (i in sample.names[2:length(dataframes)]) {newmerged.data=merge(x=newmerged.data, y=dataframes[[i]], by=by.col)
     
  }
  return(newmerged.data)
 }
+newfunction(dataframes = testdata, by.col = 'geneID', counts.col = 'counts')
