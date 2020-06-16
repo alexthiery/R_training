@@ -1,5 +1,5 @@
 # change user in order to change default path
-user = "Scarlet"
+user = "Alex"
 
 if(user == "Alex"){
   path = "./test_data/"
@@ -20,13 +20,42 @@ testdata <- readRDS(paste0(path, "fakeRNAseq_week2.RDS"))
 
 # 1) combine the dataframes using merge() - i.e. the easy way!
 
+for (i in names(testdata)) {
+  #colnames(testdata[[i]]['counts'])<- paste0('counts.',i)
+  colnames(testdata[[i]])[2] <- paste0('counts.',i)
+  print(colnames(testdata[[i]]))
+}
+
+Merged.data<- testdata[[1]]
+
+for (i in names(testdata)[2:7]) {
+  Merged.data=merge(x=Merged.data, y=testdata[[i]], by='geneID')  
+  
+}
+
+
+
 # 2) combine using cbind() - this means you need to manually change the row order and subset shared rows
 
 # Good luck!
 
+Shared.genes<- testdata$SOX8_1$geneID [testdata$SOX8_1$geneID %in% testdata$SOX8_2$geneID &
+                                         testdata$SOX8_1$geneID %in% testdata$SOX8_3$geneID &
+                                         testdata$SOX8_1$geneID %in% testdata$control_1$geneID &
+                                         testdata$SOX8_1$geneID %in% testdata$control_2$geneID &
+                                         testdata$SOX8_1$geneID %in% testdata$control_3$geneID &
+                                         testdata$SOX8_1$geneID %in% testdata$control_4$geneID]
 
+newdata <- list()
+for (i in names(testdata)) {
+  colnames(testdata[[i]])[2] <- paste0('counts',i)
+  newdata [[i]] <- testdata [[i]][testdata[[i]][, 'geneID'] %in% Shared.genes,]
+  newdata [[i]] <- newdata [[i]][order(newdata [[i]][,'geneID']),]
+}  
+ 
+newdata <- cbind(newdata[[1]], newdata[[2]], newdata[[3]], newdata[[4]],newdata[[5]], newdata[[6]], newdata[[7]])
 
-
-
+newdata[,!duplicated(colnames(newdata))]
+newdata[,-which(duplicated(colnames(newdata)))]
 
 
