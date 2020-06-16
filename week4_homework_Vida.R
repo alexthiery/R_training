@@ -35,3 +35,38 @@ for (i in names(testdata)[2:7]) {
   Merged.data=merge(x=Merged.data, y=testdata[[i]], by='geneID')  
   
 }
+
+
+
+
+
+
+
+#renaming: 
+
+
+name.change <- function(names(dataframes)){
+  for (i in names(dataframes)){
+  }
+  return(colnames(dataframes[[i]])[counts.col] <- paste0("counts.",i))
+}
+
+
+
+
+
+#merging:
+
+
+merge.data <- function(merge(dataframes)){
+  
+  for (i in datafarames[y:z]){
+      y=i+1 z=length(i)
+  }
+  return(merge(x=merge.data, dataframes[[i]], by.col='geneID'))
+  
+  print(merge.data)
+}
+
+
+
