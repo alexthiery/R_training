@@ -1,5 +1,5 @@
 # change user in order to change default path
-user = "Scarlet"
+user = "Alex"
 
 if(user == "Alex"){
   path = "./test_data/"
@@ -38,16 +38,45 @@ for (i in names(testdata)[2:7]) {
 }
 
 
-newfunction <- function(dataframes, sample.names, by.col, counts.col, ...){
+newfunction <- function(dataframes, by.col, counts.col){
  sample.names<- names(dataframes)
    for (i in sample.names) { 
-     colnames(dataframes[[i]])[colnames(dataframes[[i]])=='counts.col'] <- paste0('counts',i)
+     colnames(dataframes[[i]])[colnames(dataframes[[i]])==counts.col] <- paste0('counts_',i)
   }
- 
  newmerged.data <- dataframes[[1]]
  for (i in sample.names[2:length(dataframes)]) {newmerged.data=merge(x=newmerged.data, y=dataframes[[i]], by=by.col)
     
  }
  return(newmerged.data)
 }
+
+
 newfunction(dataframes = testdata, by.col = 'geneID', counts.col = 'counts')
+
+debug(newfunction)
+newfunction(dataframes = testdata, by.col = 'geneID', counts.col = 'counts')
+undebug(newfunction)
+
+
+
+# you can add extra functionality to a function by adding an extra argument and assigniing defaults which you want the user to be able to change if they like
+newfunction <- function(dataframes, sample.names = names(dataframes), by.col, counts.col){
+  for (i in 1:length(dataframes)) {
+    colnames(dataframes[[i]])[colnames(dataframes[[i]])==counts.col] <- paste0('counts_', sample.names[i])
+  }
+  newmerged.data <- dataframes[[1]]
+  for (i in names(dataframes)[2:length(dataframes)]) {newmerged.data=merge(x=newmerged.data, y=dataframes[[i]], by=by.col)
+  
+  }
+  return(newmerged.data)
+}
+
+newfunction(dataframes = testdata, by.col = 'geneID', counts.col = 'counts')
+
+newfunction(dataframes = testdata, sample.names = c("a", "b", "c", "d", "e", "f", "g"), by.col = 'geneID', counts.col = 'counts')
+
+
+
+
+
+
