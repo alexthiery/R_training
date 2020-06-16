@@ -46,7 +46,7 @@ for (i in names(testdata)[2:7]) {
 names()
 
 
-function(x,y,x,s,d,g)
+function(x,y,s,d,g){}
 
 name.change <- function(dataframes){
   for (i in names(dataframes)){
@@ -79,10 +79,11 @@ rename(testdata = testdata, counts_col_name = "counts")
 #merging:
 
 
-merge.data <- function(merge(dataframes)){
+merge.data <- function(dataframes){
   
   for (i in datafarames[y:z]){
-      y=i+1 z=length(testdata)
+      y=i+1
+      z=length(testdata)
   }
   return(merge(x=merge.data, dataframes[[i]], by.col='geneID'))
   
