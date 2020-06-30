@@ -1,5 +1,5 @@
 # change user in order to change default path
-user = "Scarlet"
+user = "Alex"
 
 if(user == "Alex"){
   path = "./test_data/"
@@ -98,7 +98,7 @@ colnames(read.counts[[1]]) %in% c('external_gene_id')
 
 # instead you can use pattern matching with grep >> then remove the matching columns from the dataset
 grep("al", temp)
-read.counts1 <list()
+read.counts1 <- list()
 for (i in 1:length(read.counts)) {
   read.counts1[[i]]<- read.counts[[i]] [,-grep('external_gene_id', colnames(read.counts[[i]]))]
 }
