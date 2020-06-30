@@ -3,29 +3,65 @@
 
 # task 1
 # subset columns of interest from ramyadata
-ramyadata <- read.csv(file = "Vida/Active_otic_enhancer_using_miseq_data.csv", skip = 2)
+ramyadata <- read.csv(file = "Vida/Active_otic_enhancer_using_miseq_data.csv", skip = 2, stringsAsFactors = F)
 head(ramyadata, n=3)
 chickear.data <- ramyadata [,"Gene.name"]
 print(chickear.data)
 head(chickear.data)
 
 
+# 1
+# extract unique ensembl IDs
+
+# pattern matching (grep/grepl)
+
+a <- c("abc", "bcd", "def")
+
+matches <- a[grep("bc", a)]
+
+matches <- a[grepl("bc", a)]
+
+# use unique to remove duplicated gene names
+unique(matches)
+
+
+# 2
+# to get gene names for corresponding ENSIDs, use biomart 
+BiocManager::install("biomaRt")
+library(biomaRt)
+
+
+# define biomart object
+mart <- useMart(biomart="ensembl", dataset="ggallus_gene_ensembl")
+# query biomart
+results <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
+                 filters = "ensembl_gene_id",
+                 values = ramyadata$Ensembl.ID[2:10],
+                 mart = mart)
+
+# look through previous sessions for how to replace blank values from gene names with ensembl IDs
+results$external_gene_name == ""
+
+
+
+
 # task 2
 # subset columns of interest from human_mouse_kidney data
-human_mouse_kidney <- read.csv(file = "Vida/TableS3.csv")
+human_mouse_kidney <- read.csv(file = "Vida/TableS3.csv", stringsAsFactors = F)
 summary(human_mouse_kidney, n=3)
 kidney.data <- human_mouse_kidney [,"mouse_gene"]
 print(kidney.data)
 head(kidney.data)
 
+# change vectors to uppercase
+toupper(kidney.data)
+
 
 # task 3 (error)
 # find which gene names are shared between two dataframe columns
-sharedgenes <- intersect(kidney.data[,"mouse_gene"], chickear.data[,"Gene.name"])
+sharedgenes <- intersect(kidney.data, chickear.data)
 
-library(dplyr)
-sharedgenes <- inner_join(kidney.data, chickear.data)
-
+intersect(c("a", "c", "b"), c("a", "b"))
 
 # to save R dataframe as a csv
 chickear.mousekidney.shared <- sharedgenes
