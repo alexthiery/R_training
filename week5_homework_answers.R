@@ -117,3 +117,8 @@ rownames(merged.data) <- merged.data[,2]
 merged.data[,c(1,2)] <- NULL
 
 
+# to save object
+saveRDS(merged.data, "./test_data/week5_mergedData.RDS")
+saveRDS(annotations, "./test_data/week5_annotations.RDS")
+
+
