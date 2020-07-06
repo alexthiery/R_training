@@ -22,22 +22,25 @@ chickear.data.1 <- unique(chickear.data.matches)
 
 #Task 2 (error:Error in chickear.data.1$Ensembl.ID : $ operator is invalid for atomic vectors)
 # to get gene names for corresponding ENSIDs, use biomart 
-BiocManager::install("biomaRt")
+# BiocManager::install("biomaRt")
 library(biomaRt)
 mart <- useMart(biomart="ensembl", dataset="ggallus_gene_ensembl")
 chickear.data.final <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
                              filters = "ensembl_gene_id",
-                             values = chickear.data.1$Ensembl.ID,
+                             values = chickear.data.1,
                              mart = mart)
 head(chickear.data.final)
 
 
 # look through previous sessions for how to replace blank values from gene names with ensembl IDs (I need help!!)
-# apply(DF, 2, function(x){someoperation}) will apply the function over the columns
-apply(chickear.data.final, 2, function(x)){ifelse(is.na())}
+# apply(DF, 1, function(x){someoperation}) will apply the function over the rows
+chickear.data.final[,2] <- apply(chickear.data.final, 1, function(x){ifelse(x[2] == "", x[1], x[2])})
 
 
-chickear.data.results <- chickear.data.final$external_gene_name == 
+chickear.data.final[chickear.data.final$external_gene_name == "",2] <- chickear.data.final[chickear.data.final$external_gene_name == "",1]
+
+
+#chickear.data.results <- chickear.data.final$external_gene_name == x
   
 
 # task 3
@@ -88,7 +91,7 @@ chickear.data.1 <- unique(chickear.data.matches)
 
 #Task 2
 # to get gene names for corresponding ENSIDs, use biomart 
-BiocManager::install("biomaRt")
+#BiocManager::install("biomaRt")
 library(biomaRt)
 mart <- useMart(biomart="ensembl", dataset="ggallus_gene_ensembl")
 chickear.data.final <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
@@ -100,12 +103,16 @@ chickear.data.final <- getBM(attributes = c("ensembl_gene_id", "external_gene_na
 # look through previous sessions for how to replace blank values from gene names with ensembl IDs
 
 
-
 # task 3 (error with gene name column title!!)
 # subset columns of interest from mouse E13.5 ear
 Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
 tail(Mouse.ear.e13.5)
-Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
+temp <- read.delim(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv", sep = ',')
+
+
+
+colnames(Mouse.ear.e13.5)
+Mouse.data1 <- Mouse.ear.e13.5 [,"Gene.name"]
 Mouse.data1.results <- toupper(Mouse.data1)
 print(Mouse.data1.results)
 
@@ -140,7 +147,7 @@ write.csv(chickear.mouseear.sharede16.5, "chickear.mouseear.sharede16.5.csv", ro
 # task 1
 #combine mouse e13.5 and e16.5 data
 Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
-Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
+Mouse.data1 <- Mouse.ear.e13.5 [,"?..Gene.name"]
 Mouse.data1.results <- toupper(Mouse.data1)
 
 Mouse.ear.e16.5 <- read.csv(file = "Vida/Supplemental_file_3-List_of_genes_associated_with_E16.5_peaks.csv")
@@ -148,7 +155,11 @@ Mouse.data2 <- Mouse.ear.e16.5 [,"Gene.name"]
 Mouse.data2.results <- toupper(Mouse.data2)
 
 ##### (Error) Error in fix.by(by.x, x) : 'by' must specify a uniquely valid column
-mouse.data.merged <- merge(Mouse.data2.results, Mouse.data1.results, by= "Gene.name", "ï..Gene.name")
+mouse.data.merged <- merge(Mouse.data2.results, Mouse.data1.results, by= "Gene.name", "?..Gene.name")
+
+# why merge??? just use rbind(a,b)!!
+
+
 
 #task 2
 # find which gene names are shared between two dataframe columns
