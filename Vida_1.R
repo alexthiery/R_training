@@ -1,0 +1,161 @@
+
+####chick ear vs kidney comparison:
+
+# task 1
+# subset columns of interest from ramyadata
+ramyadata <- read.csv(file = "Vida/Active_otic_enhancer_using_miseq_data.csv", skip = 2, stringsAsFactors = F)
+head(ramyadata, n=3)
+chickear.data <- ramyadata [,"Ensembl.ID"]
+print(chickear.data)
+head(chickear.data)
+
+
+# extract unique ensembl IDs
+# pattern matching (grep/grepl)
+chickear.data.matches <- chickear.data[grep("ENSGALG", chickear.data)]
+print(chickear.data.matches)
+
+
+# use unique to remove duplicated gene names
+chickear.data.1 <- unique(chickear.data.matches)
+
+
+#Task 2 (error:Error in chickear.data.1$Ensembl.ID : $ operator is invalid for atomic vectors)
+# to get gene names for corresponding ENSIDs, use biomart 
+BiocManager::install("biomaRt")
+library(biomaRt)
+mart <- useMart(biomart="ensembl", dataset="ggallus_gene_ensembl")
+chickear.data.final <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
+                             filters = "ensembl_gene_id",
+                             values = chickear.data.1$Ensembl.ID,
+                             mart = mart)
+head(chickear.data.final)
+
+
+# look through previous sessions for how to replace blank values from gene names with ensembl IDs (I need help!!)
+# apply(DF, 2, function(x){someoperation}) will apply the function over the columns
+apply(chickear.data.final, 2, function(x)){ifelse(is.na())}
+
+
+chickear.data.results <- chickear.data.final$external_gene_name == 
+  
+
+# task 3
+# subset columns of interest from human_mouse_kidney data
+human_mouse_kidney <- read.csv(file = "Vida/TableS3.csv", stringsAsFactors = F)
+summary(human_mouse_kidney, n=3)
+kidney.data <- human_mouse_kidney [,"mouse_gene"]
+print(kidney.data)
+head(kidney.data)
+
+# change vectors to uppercase
+kidney.data.results <- toupper(kidney.data)
+head(kidney.data.results)
+
+# task 3
+# find which gene names are shared between two dataframe columns
+ear.kidney.sharedgenes <- intersect(kidney.data.results, chickear.data.results)
+print(ear.kidney.sharedgenes)
+
+
+# to save R dataframe as a csv
+chickear.mousekidney.shared <- ear.kidney.sharedgenes
+write.csv(chickear.mousekidney.shared, "chickear.mousekidney.shared.csv", row.names = F)
+
+
+
+
+####chick ear vs mouse ear comparison: 
+
+# task 1
+# subset columns of interest from ramyadata
+ramyadata <- read.csv(file = "Vida/Active_otic_enhancer_using_miseq_data.csv", skip = 2, stringsAsFactors = F)
+head(ramyadata, n=3)
+chickear.data <- ramyadata [,"Ensembl.ID"]
+print(chickear.data)
+head(chickear.data)
+
+
+# extract unique ensembl IDs
+# pattern matching (grep/grepl)
+chickear.data.matches <- chickear.data[grep("ENSGALG", chickear.data)]
+print(chickear.data.matches)
+
+
+# use unique to remove duplicated gene names
+chickear.data.1 <- unique(chickear.data.matches)
+
+
+#Task 2
+# to get gene names for corresponding ENSIDs, use biomart 
+BiocManager::install("biomaRt")
+library(biomaRt)
+mart <- useMart(biomart="ensembl", dataset="ggallus_gene_ensembl")
+chickear.data.final <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
+                             filters = "ensembl_gene_id",
+                             values = chickear.data.1$Ensembl.ID,
+                             mart = mart)
+
+
+# look through previous sessions for how to replace blank values from gene names with ensembl IDs
+
+
+
+# task 3 (error with gene name column title!!)
+# subset columns of interest from mouse E13.5 ear
+Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
+tail(Mouse.ear.e13.5)
+Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
+Mouse.data1.results <- toupper(Mouse.data1)
+print(Mouse.data1.results)
+
+
+# task 4
+# subset columns of interest from mouse E16.5 ear
+Mouse.ear.e16.5 <- read.csv(file = "Vida/Supplemental_file_3-List_of_genes_associated_with_E16.5_peaks.csv")
+tail(Mouse.ear.e16.5)
+Mouse.data2 <- Mouse.ear.e16.5 [,"Gene.name"]
+Mouse.data2.results <- toupper(Mouse.data2)
+print(Mouse.data2.results)
+
+
+# task 5
+# find which gene names are shared between two dataframe columns
+Ear.sharedgenes1 <- intersect(chickear.data.results, Mouse.data1.results)
+Ear.sharedgenes2 <- intersect(chickear.data.results, Mouse.data2.results)
+
+
+
+# to save R dataframe as a csv
+chickear.mouseear.sharede13.5 <- Ear.sharedgenes1
+write.csv(chickear.mouseear.sharede13.5, "chickear.mouseear.sharede13.5.csv", row.names = F)
+
+chickear.mouseear.sharede16.5 <- Ear.sharedgenes2
+write.csv(chickear.mouseear.sharede16.5, "chickear.mouseear.sharede16.5.csv", row.names = F)
+
+
+
+###overall comparison:
+
+# task 1
+#combine mouse e13.5 and e16.5 data
+Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
+Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
+Mouse.data1.results <- toupper(Mouse.data1)
+
+Mouse.ear.e16.5 <- read.csv(file = "Vida/Supplemental_file_3-List_of_genes_associated_with_E16.5_peaks.csv")
+Mouse.data2 <- Mouse.ear.e16.5 [,"Gene.name"]
+Mouse.data2.results <- toupper(Mouse.data2)
+
+##### (Error) Error in fix.by(by.x, x) : 'by' must specify a uniquely valid column
+mouse.data.merged <- merge(Mouse.data2.results, Mouse.data1.results, by= "Gene.name", "ï..Gene.name")
+
+#task 2
+# find which gene names are shared between two dataframe columns
+sharedgenes3 <- intersect(chickear.data.results, mouse.data.merged, kidney.data.results)
+
+
+# to save R dataframe as a csv
+Chick_mouse_ear_kidney.shared <- sharedgenes3
+write.csv(Chick_mouse_ear_kidney.shared , "Chick_mouse_ear_kidney.shared .csv", row.names = F)
+
