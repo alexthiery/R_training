@@ -23,12 +23,16 @@ chickear.data.1 <- unique(chickear.data.matches)
 # to get gene names for corresponding ENSIDs, use biomart 
 ##BiocManager::install("biomaRt")
 library(biomaRt)
-mart <- useMart(biomart="ensembl", dataset="ggallus_gene_ensembl")
+
+ensembl = useEnsembl(biomart="ensembl", dataset="ggallus_gene_ensembl", version=85)
 chickear.data.final <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
                              filters = "ensembl_gene_id",
                              values = chickear.data.1,
-                             mart = mart)
+                             mart = ensembl)
 head(chickear.data.final)
+
+
+
 
 
 # look through previous sessions for how to replace blank values from gene names with ensembl IDs (I need help!!)
@@ -38,7 +42,7 @@ head(chickear.data.results)
 
 #Alternative: chickear.data.final[chickear.data.final$external_gene_name == "",2] <- chickear.data.final[chickear.data.final$external_gene_name == "",1]
 
-write.csv(chickear.data.results , "chickear.data.results .csv", row.names = F)  
+write.csv(chickear.data.results , "chickear.data.results.csv", row.names = F)  
 
 # task 3
 # subset columns of interest from human_mouse_kidney data
@@ -107,7 +111,7 @@ print(chickear.data.results)
 Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
 tail(Mouse.ear.e13.5)
 colnames(Mouse.ear.e13.5)
-Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
+Mouse.data1 <- Mouse.ear.e13.5 [,"?..Gene.name"]
 Mouse.data1.results <- toupper(Mouse.data1)
 head(Mouse.data1.results)
 
@@ -144,23 +148,16 @@ write.csv(chickear.mouseear.sharede16.5, "chickear.mouseear.sharede16.5.csv", ro
 
 # task 1
 #combine mouse e13.5 and e16.5 data
-Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
-Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
-Mouse.data1.results <- toupper(Mouse.data1)
-head(Mouse.data1.results)
+Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv", stringsAsFactors = F)
 
-Mouse.ear.e16.5 <- read.csv(file = "Vida/Supplemental_file_3-List_of_genes_associated_with_E16.5_peaks.csv")
-Mouse.data2 <- Mouse.ear.e16.5 [,"Gene.name"]
-Mouse.data2.results <- toupper(Mouse.data2)
+Mouse.ear.e16.5 <- read.csv(file = "Vida/Supplemental_file_3-List_of_genes_associated_with_E16.5_peaks.csv", stringsAsFactors = F)
 
-
-mouse.data.merged <- !duplicated(t(cbind(t(Mouse.data1.results)), t(Mouse.data2.results)))
-
-mouse.data.merged <- !duplicated(rbind(Mouse.data2.results, Mouse.data1.results))
+mouse.data.merged <- c(Mouse.ear.e13.5[, "Gene.name"], Mouse.ear.e16.5[, "Gene.name"])
 
 
 #task 2
 # find which gene names are shared between two dataframe columns
+
 sharedgenes3 <- intersect(chickear.data.results, mouse.data.merged, kidney.data.results)
 
 
