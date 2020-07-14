@@ -5,7 +5,7 @@
 # subset columns of interest from ramyadata
 ramyadata <- read.csv(file = "Vida/Ramya,Active_otic_enhancers_using_Hiseq_data.csv", skip = 1, stringsAsFactors = F)
 head(ramyadata, n=3)
-chickear.data <- ramyadata [,"Ensembl.gene.id"]
+chickear.data <- ramyadata[,"Ensembl.gene.id"]
 head(chickear.data)
 
 
@@ -14,10 +14,8 @@ head(chickear.data)
 chickear.data.matches <- chickear.data[grep("ENSGALG", chickear.data)]
 print(chickear.data.matches)
 
-
 # use unique to remove duplicated gene names
 chickear.data.1 <- unique(chickear.data.matches)
-
 
 #Task 2
 # to get gene names for corresponding ENSIDs, use biomart 
@@ -59,12 +57,12 @@ head(kidney.data.results)
 ear.kidney.sharedgenes <- intersect(kidney.data.results, chickear.data.results)
 print(ear.kidney.sharedgenes)
 
+# genes which are not in kidney.data.results
+chickear.data.results[!chickear.data.results %in% kidney.data.results]
 
 # to save R dataframe as a csv
 chickear.mousekidney.shared <- ear.kidney.sharedgenes
 write.csv(chickear.mousekidney.shared, "chickear.mousekidney.shared.csv", row.names = F)
-
-
 
 
 
@@ -114,7 +112,7 @@ head(chickear.data.results)
 Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
 tail(Mouse.ear.e13.5)
 colnames(Mouse.ear.e13.5)
-Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
+Mouse.data1 <- Mouse.ear.e13.5 [,"?..Gene.name"]
 Mouse.data1.results <- toupper(Mouse.data1)
 head(Mouse.data1.results)
 
@@ -155,7 +153,7 @@ write.csv(chickear.mouseear.sharede16.5, "chickear.mouseear.sharede16.5.csv", ro
 Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_associated_with_E13.5_Six1_peaks.csv")
 tail(Mouse.ear.e13.5)
 colnames(Mouse.ear.e13.5)
-Mouse.data1 <- Mouse.ear.e13.5 [,"ï..Gene.name"]
+Mouse.data1 <- Mouse.ear.e13.5 [,"?..Gene.name"]
 Mouse.data1.results <- toupper(Mouse.data1)
 head(Mouse.data1.results)
 
@@ -170,7 +168,7 @@ print(Mouse.data2.results)
 
 #Task 3 
 # combine mouse ear data
-mouse.data.merged1 <- c(Mouse.ear.e13.5[, "ï..Gene.name"], Mouse.ear.e16.5[, "Gene.name"])
+mouse.data.merged1 <- c(Mouse.ear.e13.5[, "?..Gene.name"], Mouse.ear.e16.5[, "Gene.name"])
 mouse.data.merged2 <- unique(mouse.data.merged1)
 summary(mouse.data.merged2)
 mouse.data.merged <- toupper(mouse.data.merged2)
@@ -213,7 +211,7 @@ Mouse.ear.e13.5 <- read.csv(file = "Vida/Supplemental_file_2-List_of_genes_assoc
 
 Mouse.ear.e16.5 <- read.csv(file = "Vida/Supplemental_file_3-List_of_genes_associated_with_E16.5_peaks.csv", stringsAsFactors = F)
 
-mouse.data.merged1 <- c(Mouse.ear.e13.5[, "ï..Gene.name"], Mouse.ear.e16.5[, "Gene.name"])
+mouse.data.merged1 <- c(Mouse.ear.e13.5[, "?..Gene.name"], Mouse.ear.e16.5[, "Gene.name"])
 summary(mouse.data.merged)
 mouse.data.merged2 <- unique(mouse.data.merged1)
 summary(mouse.data.merged2)
